@@ -63,7 +63,7 @@ namespace OOPsReview.Data
         //this property will compile cleanly
         //this property will return a value IF EmploymentPositions has a instance of List<T>
         //this property WILL ABORT IF EmploymentPosition has NOT been set to an instance of List<T>
-        public int NumberofPositions { get { return EmploymentPositions.Count; } }
+        public int NumberOfPositions { get { return EmploymentPositions.Count; } }
         //public Person()
         //{
         //    //the system will automatically assign default system values to
