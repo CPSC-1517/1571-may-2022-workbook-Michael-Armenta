@@ -16,6 +16,7 @@ namespace WebApp.Pages.Samples
 
         // Feedback is just for display, doesn't need a BindProperty on it.
         public string Feedback { get; set; }
+        public string ErrorMsg { get; set; }
         public void OnGet()
         {
             if(Num == 0)
@@ -37,6 +38,22 @@ namespace WebApp.Pages.Samples
             else
             {
                 Feedback = $"You entered the value {Num} (displayed by OnPost)" +
+                $" your mass text is {MassText} and I like the {FavouriteCourse} course";
+            }
+        }
+        public void OnPostSecondButton()
+        {
+            if (Num == 0)
+            {
+                Feedback = "executing the OnPostSecondButton method for a value of zero";
+            }
+            else if(FavouriteCourse == 0)
+            {
+                Feedback = "You did not select a favourite course.";
+            }
+            else
+            {
+                Feedback = $"You entered the value {Num} (displayed by OnPostSecondButton)" +
                 $" your mass text is {MassText} and I like the {FavouriteCourse} course";
             }
         }
