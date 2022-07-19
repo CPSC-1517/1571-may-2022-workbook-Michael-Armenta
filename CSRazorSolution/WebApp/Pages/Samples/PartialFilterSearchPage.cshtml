@@ -1,7 +1,7 @@
-﻿@page "{searcharg?}"
-@model WebApp.Pages.Samples.PartialFilterSearchModel
+﻿@page
+@model WebApp.Pages.Samples.PartialFilterSearchPageModel
 @{
-    ViewData["Title"] = "Partial String Table Query";
+    ViewData["Title"] = "Partial String Table Query : Page";
 }
 <h1>Partial String query resulting in a Table display</h1>
 
@@ -19,7 +19,7 @@
     *@
     @if (Model.TerritoryInfo != null)
     {
-        @*This IF checks to see if any records were found when the query was executing*@
+        @*This IF checks to see if any records were found when the query was executed*@
         if (Model.TerritoryInfo.Count == 0)
         {
             <p style="color:blueviolet; font-weight:bold; font-size:large;">
@@ -32,7 +32,7 @@
                 Records have been found to display
                 The number of records is unknown
                 Use a tabular (grid table) layout to display the records
-                Use the <table> tag and its components <thead>, <tbody>, <tfoot>
+                Use the <table> tag and its components <thead>,<tbody>,<tfoot>
             *@
             <table>
                 <thead>
@@ -60,22 +60,20 @@
                                     the value to be passed is attached to the
                                        end of the page reference
                                     In this example, the value will be passed
-                                       to the receivng page as a routing parameter
+                                       to the receivng page as a Get request parameter
                                     You CAN send multiple values to the new page
                                     The receiving page MUST have the same number of
-                                       routing parameters as those past AND the 
+                                       parameters as those past BUT the 
                                        order of the routing parameters is IMPORTANT
-                                    Page reference syntax: /pathname/value[/value/...]
+                                    Page reference syntax: /pathname?label=value[&label=value...]
                                     The text of your anchor tag DOES NOT need to be
                                        the value that is being passed
                                 *@
-                                <a href="/Samples/ReceivingPage/@item.TerritoryID">
+                                <a href="/Samples/ReceivingPage?tid=@item.TerritoryID">
                                     Edit this territory
                                 </a>
                                 
-                                @*<a href="/Samples/ReceivingPage?tid=@item.TerritoryID">
-                                    Edit this territory
-                                </a>*@
+                                
                             </td>
                             <td>@item.TerritoryDescription</td>
                             <td><select disabled="true">
@@ -95,7 +93,7 @@
                         </tr>
                     }
                 </tbody>
-               <tfoot>
+                <tfoot>
                  @*used for summay table information eg totals
                    used for displaying paging information                                       
                  *@
@@ -106,12 +104,13 @@
                                 //  the value to be displayed AND it's numeric
                                 //the string maybe be a character line : Next
                                 //the string maybe be a numeric : 4
-                                //  First Previous 1 2 3 4 5 Next Last                            
+                                //  First Previous 1 2 3 4 5 Next Last
+                              
                                 foreach(var pageRef in Model.Pager)
                                 {
                                     if (pageRef == Model.Pager.CurrentPage)
                                     {
-                                        <b>@pageRef.Text</b>
+                                            <b>@pageRef.Text</b>
                                     }
                                     else
                                     {
@@ -124,11 +123,19 @@
                                         //      of the desired page
                                         //for the asp-page your page name reference
                                         //  MUST be based from the folder name Pages
-                                        <a title="Page @pageRef.Page"
+
+                                        //currentPage will be sent as a url parameter
+                                        //  which will be obtained on the OnGet()
+
+                                        //searcharg route will send the data currently
+                                        //   in the searcharg variable back to the 
+                                        //   searcharg variable
+                                            <a title="Page @pageRef.Page"
                                            asp-page="/Samples/PartialFilterSearch"
+                                           asp-route-searcharg="@Model.searcharg"
                                            asp-route-currentpage="@pageRef.Page">
-                                            @pageRef.Text   
-                                         </a>
+                                                @pageRef.Text   
+                                             </a>
                                     }
                                 }
                             }

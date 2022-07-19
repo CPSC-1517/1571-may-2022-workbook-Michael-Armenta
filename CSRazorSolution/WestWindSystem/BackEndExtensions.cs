@@ -50,7 +50,6 @@ namespace WestWindSystem
                 //  supplying the context reference to the service class
                 return new RegionServices(context);
             });
-
             services.AddTransient<TerritoryServices>((serviceProvider) =>
             {
                 //Get the connection class that was registered above in AddDbContext
@@ -59,6 +58,24 @@ namespace WestWindSystem
                 //create an instance of the service class (RegionServices) 
                 //  supplying the context reference to the service class
                 return new TerritoryServices(context);
+            });
+            services.AddTransient<CategoryServices>((serviceProvider) =>
+            {
+                //Get the connection class that was registered above in AddDbContext
+                var context = serviceProvider.GetService<WestWindContext>();
+
+                //create an instance of the service class (RegionServices) 
+                //  supplying the context reference to the service class
+                return new CategoryServices(context);
+            });
+            services.AddTransient<ProductServices>((serviceProvider) =>
+            {
+                //Get the connection class that was registered above in AddDbContext
+                var context = serviceProvider.GetService<WestWindContext>();
+
+                //create an instance of the service class (RegionServices) 
+                //  supplying the context reference to the service class
+                return new ProductServices(context);
             });
         }
     }
